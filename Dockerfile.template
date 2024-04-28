@@ -1,0 +1,19 @@
+ARG BALENA_ARCH=%%BALENA_ARCH%%
+
+FROM balenalib/$BALENA_ARCH-alpine:3.18
+
+LABEL maintainer="chris.hemmings@lush.co.uk"
+
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN apk update && apk upgrade && apk add json-c-dev libusb-dev usbutils tini && chmod u+x /entrypoint.sh
+RUN apk add --no-cache --virtual .build-deps git alpine-sdk linux-headers automake autoconf libtool && \
+    git clone https://github.com/katie-snow/Ultimarc-linux && \
+    cd Ultimarc-linux && \
+    ./autogen.sh && ./configure --disable-shared --prefix=/usr && make && make install && \
+    cd .. && rm -rf Ultimarc-linux && \
+    apk del --no-network .build-deps;
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["/usr/bin/tail", "-f", "/dev/null"]
