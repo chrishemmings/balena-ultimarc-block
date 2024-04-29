@@ -1,7 +1,8 @@
 name: ultimarc
 description: >-
-  A tiny build of Ultimarc-Linux that sets controller configuration at startup from a Base64 encoded JSON environment variable
-version: 1.0.0
+  A tiny build of Ultimarc-Linux that sets controller configuration at startup from a Base64 encoded 
+  JSON environment variable
+version: 1.0.1
 type: sw.block
 assets:
   repository:
@@ -15,6 +16,7 @@ assets:
 data:
   defaultDeviceType: raspberrypi5
   supportedDeviceTypes:
+    - raspberry-pi
     - raspberrypi5
     - raspberrypi4
     - raspberrypi3
